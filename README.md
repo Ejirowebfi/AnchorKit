@@ -5,6 +5,7 @@ AnchorKit is a Soroban-native toolkit for anchoring off-chain attestations to St
 
 ## Features
 
+- **Strict Schema Validation** - Multi-layer validation (compile-time, init-time, runtime) prevents misconfiguration bugs before deployment
 - Attestation management with replay attack protection
 - Attestor registration and revocation
 - Endpoint configuration for attestors
@@ -96,6 +97,8 @@ const auditLog = await contract.get_audit_log(0);
 - **[QUICK_START.md](./QUICK_START.md)** - Quick reference guide with examples
 
 ### Feature Documentation
+- **[STRICT_VALIDATION_IMPLEMENTATION.md](./STRICT_VALIDATION_IMPLEMENTATION.md)** - Multi-layer validation system
+- **[STRICT_VALIDATION_GUIDE.md](./STRICT_VALIDATION_GUIDE.md)** - Validation usage guide
 - **[SESSION_TRACEABILITY.md](./SESSION_TRACEABILITY.md)** - Complete feature guide with usage patterns
 - **[API_SPEC.md](./API_SPEC.md)** - API specification and error codes
 
@@ -131,8 +134,14 @@ const auditLog = await contract.get_audit_log(0);
 ## Building
 
 ```bash
+# Install validation dependencies (one-time setup)
+pip3 install jsonschema toml
+
+# Build with automatic config validation
 cargo build --release
 ```
+
+**Note**: The build process automatically validates all configuration files against the schema. Build will fail if any config is invalid, preventing deployment of misconfigured contracts.
 
 ## Testing
 
